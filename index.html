@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Website Builder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #ffb800;
+            --gray: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234361ee" opacity="0.1"/><path d="M0 0L100 100" stroke="%234361ee" stroke-width="2" opacity="0.2"/></svg>');
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--gray);
+        }
+        
+        .user-types {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--secondary);
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-header {
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .developer .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        .non-technical .card-header {
+            background: linear-gradient(135deg, var(--success), #2a9d8f);
+        }
+        
+        .technical .card-header {
+            background: linear-gradient(135deg, var(--accent), #b5179e);
+        }
+        
+        .card-header i {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .card-header h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .card-body ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .card-body li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .card-body li:last-child {
+            border-bottom: none;
+        }
+        
+        .card-body li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        .features {
+            padding: 80px 0;
+            background-color: #f5f7ff;
+        }
+        
+        .feature {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        .feature:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .feature-content {
+            flex: 1;
+            padding: 20px;
+            min-width: 300px;
+        }
+        
+        .feature-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .feature-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .pricing {
+            padding: 80px 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .pricing-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        .pricing-card.popular {
+            transform: scale(1.05);
+            border: 2px solid var(--primary);
+        }
+        
+        .pricing-card-header {
+            padding: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .pricing-card-body {
+            padding: 30px;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 16px;
+            color: var(--gray);
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--success);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            color: var(--accent);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .feature, .feature:nth-child(even) {
+                flex-direction: column;
+            }
+            
+            .pricing-card.popular {
+                transform: scale(1);
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>UniversalBuilder</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#user-types">User Types</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <a href="#signup" class="btn">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Build Websites & Apps For Everyone</h1>
+            <p>Whether you're a developer, technical user, or non-technical user, our platform provides the tools you need to create stunning websites and applications with ease.</p>
+            <a href="#signup" class="btn">Start Building Now</a>
+        </div>
+    </section>
+
+    <section class="user-types" id="user-types">
+        <div class="container">
+            <div class="section-title">
+                <h2>Designed For All User Types</h2>
+                <p>Our platform caters to different levels of technical expertise with tailored experiences</p>
+            </div>
+            <div class="cards">
+                <div class="card developer">
+                    <div class="card-header">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>For Developers</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Full code access and customization</li>
+                            <li><i class="fas fa-check-circle"></i> Docker container integration</li>
+                            <li><i class="fas fa-check-circle"></i> Multiple database support (MySQL, SQL, MongoDB)</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced deployment options</li>
+                            <li><i class="fas fa-check-circle"></i> API access and webhooks</li>
+                        </ul>
+                        <a href="#developer" class="btn">Developer Options</a>
+                    </div>
+                </div>
+                
+                <div class="card non-technical">
+                    <div class="card-header">
+                        <i class="fas fa-user-friends"></i>
+                        <h3>For Non-Technical Users</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Drag-and-drop interface</li>
+                            <li><i class="fas fa-check-circle"></i> Pre-designed templates</li>
+                            <li><i class="fas fa-check-circle"></i> No coding required</li>
+                            <li><i class="fas fa-check-circle"></i> Easy content management</li>
+                            <li><i class="fas fa-check-circle"></i> One-click publishing</li>
+                        </ul>
+                        <a href="#non-technical" class="btn">Easy Builder</a>
+                    </div>
+                </div>
+                
+                <div class="card technical">
+                    <div class="card-header">
+                        <i class="fas fa-cogs"></i>
+                        <h3>For Technical Users</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Custom code snippets</li>
+                            <li><i class="fas fa-check-circle"></i> Database management tools</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced styling options</li>
+                            <li><i class="fas fa-check-circle"></i> Integration capabilities</li>
+                            <li><i class="fas fa-check-circle"></i> Export options</li>
+                        </ul>
+                        <a href="#technical" class="btn">Technical Features</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Powerful Features</h2>
+                <p>Everything you need to build, deploy, and manage your websites and applications</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-content">
+                    <h3>Flexible Database Options</h3>
+                    <p>Choose from multiple database systems including MySQL, SQL Server, PostgreSQL, and MongoDB. Our platform lets you select the right database for each part of your application.</p>
+                    <p>All databases are managed through Docker containers for easy deployment and scalability.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%234361ee' opacity='0.1' rx='15'/><path d='M200 70 L100 150 L200 230 L300 150 Z' stroke='%234361ee' stroke-width='8' fill='none'/><circle cx='200' cy='150' r='40' fill='%234361ee'/><text x='200' y='150' font-family='Arial' font-size='20' fill='white' text-anchor='middle' dominant-baseline='middle'>DB</text><text x='200' y='280' font-family='Arial' font-size='18' fill='%234361ee' text-anchor='middle'>Database Options</text></svg>" alt="Database Options">
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-content">
+                    <h3>Multi-Language Support</h3>
+                    <p>Create applications using your preferred programming language. We support JavaScript, Python, PHP, Ruby, and more through customizable bundles.</p>
+                    <p>Our Docker-based architecture ensures consistent environments regardless of the language you choose.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%23f72585' opacity='0.1' rx='15'/><circle cx='120' cy='100' r='40' fill='%23f72585'/><circle cx='200' cy='150' r='40' fill='%23f72585'/><circle cx='280' cy='100' r='40' fill='%23f72585'/><text x='120' y='100' font-family='Arial' font-size='16' fill='white' text-anchor='middle' dominant-baseline='middle'>JS</text><text x='200' y='150' font-family='Arial' font-size='16' fill='white' text-anchor='middle' dominant-baseline='middle'>PY</text><text x='280' y='100' font-family='Arial' font-size='16' fill='white' text-anchor='middle' dominant-baseline='middle'>PHP</text><text x='200' y='280' font-family='Arial' font-size='18' fill='%23f72585' text-anchor='middle'>Programming Languages</text></svg>" alt="Programming Languages">
+                </div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-content">
+                    <h3>Easy Deployment</h3>
+                    <p>Deploy your projects directly from our platform with just one click. We handle all the infrastructure, server configuration, and SSL certificates.</p>
+                    <p>Your applications are automatically containerized using Docker for consistent performance across environments.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='400' height='300' fill='%234cc9f0' opacity='0.1' rx='15'/><polygon points='200,70 280,130 240,230 160,230 120,130' stroke='%234cc9f0' stroke-width='8' fill='none'/><circle cx='200' cy='150' r='40' fill='%234cc9f0'/><text x='200' y='150' font-family='Arial' font-size='16' fill='white' text-anchor='middle' dominant-baseline='middle'>Deploy</text><text x='200' y='280' font-family='Arial' font-size='18' fill='%234cc9f0' text-anchor='middle'>One-Click Deployment</text></svg>" alt="Deployment">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simple Pricing</h2>
+                <p>Choose the plan that works best for your needs</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-card-header">
+                        <h3>Free</h3>
+                        <p>For beginners and small projects</p>
+                    </div>
+                    <div class="pricing-card-body">
+                        <div class="price">$0 <span>/month</span></div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 1 Website</li>
+                            <li><i class="fas fa-check"></i> Basic Templates</li>
+                            <li><i class="fas fa-check"></i> 500 MB Storage</li>
+                            <li><i class="fas fa-check"></i> 1 GB Bandwidth</li>
+                            <li><i class="fas fa-times"></i> No Code Export</li>
+                        </ul>
+                        <a href="#free" class="btn">Get Started</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card popular">
+                    <div class="pricing-card-header">
+                        <h3>Pro</h3>
+                        <p>For professionals and businesses</p>
+                    </div>
+                    <div class="pricing-card-body">
+                        <div class="price">$19 <span>/month</span></div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> 5 Websites</li>
+                            <li><i class="fas fa-check"></i> All Templates</li>
+                            <li><i class="fas fa-check"></i> 5 GB Storage</li>
+                            <li><i class="fas fa-check"></i> 10 GB Bandwidth</li>
+                            <li><i class="fas fa-check"></i> Code Export (Zip)</li>
+                        </ul>
+                        <a href="#pro" class="btn">Get Started</a>
+                    </div>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-card-header">
+                        <h3>Enterprise</h3>
+                        <p>For large scale applications</p>
+                    </div>
+                    <div class="pricing-card-body">
+                        <div class="price">$49 <span>/month</span></div>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Unlimited Websites</li>
+                            <li><i class="fas fa-check"></i> All Templates</li>
+                            <li><i class="fas fa-check"></i> 50 GB Storage</li>
+                            <li><i class="fas fa-check"></i> 100 GB Bandwidth</li>
+                            <li><i class="fas fa-check"></i> Priority Code Export</li>
+                        </ul>
+                        <a href="#enterprise" class="btn">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>UniversalBuilder</h3>
+                    <p>Building the future of web development with powerful tools for all users.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Templates</a></li>
+                        <li><a href="#">Examples</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 UniversalBuilder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
